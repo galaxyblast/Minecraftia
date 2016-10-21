@@ -1,0 +1,51 @@
+[01:00:27] [main/INFO]: Setting user: Player270
+[01:00:28] [Client thread/INFO]: LWJGL Version: 2.9.1
+[01:00:34] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Minecraftia Total Overhaul
+[01:00:35] [Sound Library Loader/INFO]: Sound engine started
+[01:00:36] [Client thread/INFO]: Created: 16x16 textures/blocks-atlas
+[01:00:36] [Client thread/INFO]: Created: 16x16 textures/items-atlas
+[01:00:36] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Minecraftia Total Overhaul
+[01:00:36] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[01:00:36] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[01:00:37] [Sound Library Loader/INFO]: Sound engine started
+[01:00:41] [Client thread/INFO]: Deleting level Copy of Copy of New World
+[01:00:41] [Client thread/INFO]: Attempt 1...
+[01:00:42] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
+[01:00:42] [Server thread/INFO]: Generating keypair
+[01:00:43] [Server thread/INFO]: Converting map!
+[01:00:43] [Server thread/INFO]: Scanning folders...
+[01:00:43] [Server thread/INFO]: Total conversion count is 0
+[01:00:43] [Server thread/INFO]: Preparing start region for level 0
+[01:00:44] [Server thread/INFO]: Preparing spawn area: 15%
+[01:00:45] [Server thread/INFO]: Preparing spawn area: 39%
+[01:00:46] [Server thread/INFO]: Preparing spawn area: 59%
+[01:00:47] [Server thread/INFO]: Preparing spawn area: 78%
+[01:00:48] [Server thread/INFO]: Preparing spawn area: 99%
+[01:00:48] [Server thread/INFO]: Changing view distance to 12, from 10
+[01:00:49] [Server thread/INFO]: Player270[local:E:f0869e21] logged in with entity id 147 at (-41.5, 71.0, 38.5)
+[01:00:49] [Server thread/INFO]: Player270 joined the game
+[01:00:53] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 2353ms behind, skipping 47 tick(s)
+[01:00:58] [Client thread/INFO]: Warning: Clientside chunk ticking took 115 ms
+[01:00:58] [Client thread/INFO]: Warning: Clientside chunk ticking took 112 ms
+[01:00:58] [Client thread/INFO]: Warning: Clientside chunk ticking took 115 ms
+[01:00:58] [Client thread/INFO]: Warning: Clientside chunk ticking took 109 ms
+[01:00:58] [Client thread/INFO]: Warning: Clientside chunk ticking took 111 ms
+[01:00:59] [Client thread/INFO]: Warning: Clientside chunk ticking took 106 ms
+[01:01:00] [Client thread/INFO]: Warning: Clientside chunk ticking took 102 ms
+[01:01:00] [Client thread/INFO]: Warning: Clientside chunk ticking took 271 ms
+[01:01:01] [Client thread/INFO]: Warning: Clientside chunk ticking took 118 ms
+[01:01:01] [Client thread/INFO]: Warning: Clientside chunk ticking took 118 ms
+[01:01:01] [Client thread/INFO]: Warning: Clientside chunk ticking took 104 ms
+[01:01:09] [Server thread/INFO]: Saving and pausing game...
+[01:01:09] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/Overworld
+[01:01:09] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/Nether
+[01:01:09] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/The End
+[01:01:09] [Client thread/INFO]: Stopping!
+[01:01:09] [Server thread/INFO]: Stopping server
+[01:01:09] [Server thread/INFO]: Saving players
+[01:01:09] [Server thread/INFO]: Saving worlds
+[01:01:09] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/Overworld
+[01:01:09] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/Nether
+[01:01:09] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/The End
+[01:01:09] [Client Shutdown Thread/INFO]: Stopping server
+[01:01:09] [Client Shutdown Thread/INFO]: Saving players

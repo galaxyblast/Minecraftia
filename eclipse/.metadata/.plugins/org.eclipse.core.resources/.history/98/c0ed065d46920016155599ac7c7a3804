@@ -1,0 +1,18 @@
+package com.galaxyblast.minecraftia.world;
+
+import net.minecraft.world.WorldType;
+
+public class WorldTypeMinecraftia extends WorldType
+{
+
+	public WorldTypeMinecraftia(String name)
+	{
+		super(name);
+	}
+
+	@Override
+	public float getCloudHeight()
+    {
+        return 192.0F;
+    }
+}
