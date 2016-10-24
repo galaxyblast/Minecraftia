@@ -18,12 +18,7 @@ public class WorldTypeMinecraftia extends WorldType
 	public WorldTypeMinecraftia(String name)
 	{
 		super(name);
-		BiomeGenBase.extremeHills.rootHeight = 0.8F;
-		BiomeGenBase.extremeHills.heightVariation = 0.9F;
-		BiomeGenBase.extremeHillsPlus.rootHeight = 0.8F;
-		BiomeGenBase.extremeHillsPlus.heightVariation = 0.9F;
-		BiomeGenBase.swampland.rootHeight = 0.1F;
-		BiomeGenBase.swampland.heightVariation = 0.1F;
+		this.adjustBiomeSettings();
 	}
 
 	@Override
@@ -38,13 +33,31 @@ public class WorldTypeMinecraftia extends WorldType
 		return new ChunkProviderMinecraftia(world, world.getSeed(), world.getWorldInfo().isMapFeaturesEnabled());
     }
 	
+	@Override
+	public WorldChunkManager getChunkManager(World world)
+    {
+		return new MinecraftiaChunkManager(world);
+    }
+	
 	//Look into this
 	@Override
 	public GenLayer getBiomeLayer(long worldSeed, GenLayer parentLayer)
     {
         GenLayer ret = new GenLayerBiome(200L, parentLayer, this);
-        ret = GenLayerZoom.magnify(1000L, ret, 2);
+        ret = GenLayerZoom.magnify(1000L, ret, 4);
         ret = new GenLayerBiomeEdge(1000L, ret);
         return ret;
     }
+	
+	private void adjustBiomeSettings()
+	{
+		BiomeGenBase.extremeHills.rootHeight = 1.2F;
+		BiomeGenBase.extremeHills.heightVariation = 0.8F;
+		BiomeGenBase.extremeHillsPlus.rootHeight = 0.8F;
+		BiomeGenBase.extremeHillsPlus.heightVariation = 0.9F;
+		BiomeGenBase.swampland.rootHeight = -0.25F;
+		BiomeGenBase.swampland.heightVariation = -0.08F;
+		BiomeGenBase.forest.rootHeight += 0.1F;
+		BiomeGenBase.roofedForest.rootHeight += 0.1F;
+	}
 }

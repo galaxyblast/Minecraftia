@@ -65,7 +65,7 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
     private final float[] parabolicField;
     private final float[] parabolicField2;
     private World worldObj;
-    private MapGenBase caveGenerator = new MapGenCaves();
+    private MapGenBase caveGenerator = new MinecraftiaGenCave();
     private MapGenBase ravineGenerator = new MapGenRavine();
     private final boolean mapFeaturesEnabled;
     private MapGenStronghold strongholdGenerator = new MapGenStronghold();

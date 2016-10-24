@@ -38,7 +38,7 @@ public class NoiseGenMinecraftia extends NoiseGeneratorOctaves
             }
         }
 
-        double dy = 1.0D;
+        double dy = 0.8D;
         double dxz = 0.3D;
 
         for (int l1 = 0; l1 < this.octaves; ++l1)

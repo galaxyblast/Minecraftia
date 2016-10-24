@@ -8,6 +8,6 @@ public class BiomeEvent
 	@SubscribeEvent
 	public void BiomeGen(WorldTypeEvent.BiomeSize e)
 	{
-		e.newSize = 6;
+		e.newSize = 5;
 	}
 }
