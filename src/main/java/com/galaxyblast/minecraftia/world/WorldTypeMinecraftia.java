@@ -11,6 +11,9 @@ import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.GenLayerBiome;
 import net.minecraft.world.gen.layer.GenLayerBiomeEdge;
 import net.minecraft.world.gen.layer.GenLayerZoom;
+import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.BiomeManager.BiomeEntry;
+import net.minecraftforge.common.BiomeManager.BiomeType;
 
 public class WorldTypeMinecraftia extends WorldType
 {
@@ -57,7 +60,8 @@ public class WorldTypeMinecraftia extends WorldType
 		BiomeGenBase.extremeHillsPlus.heightVariation = 0.9F;
 		BiomeGenBase.swampland.rootHeight = -0.25F;
 		BiomeGenBase.swampland.heightVariation = -0.08F;
-		BiomeGenBase.forest.rootHeight += 0.1F;
-		BiomeGenBase.roofedForest.rootHeight += 0.1F;
+		BiomeGenBase.forest.rootHeight += 0.2F;
+		BiomeGenBase.forest.heightVariation += 0.3F;
+		BiomeGenBase.roofedForest.rootHeight += 0.2F;
 	}
 }

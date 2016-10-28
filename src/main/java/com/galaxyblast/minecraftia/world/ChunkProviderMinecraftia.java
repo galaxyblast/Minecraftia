@@ -2,6 +2,8 @@ package com.galaxyblast.minecraftia.world;
 
 import java.util.Random;
 
+import com.galaxyblast.minecraftia.world.noise.MinecraftiaNoiseGen;
+
 import cpw.mods.fml.common.eventhandler.Event.Result;
 
 import net.minecraft.block.Block;
@@ -61,7 +63,8 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
     double[] field_147426_g;
     private double[] stoneNoise = new double[256];
     private WorldType field_147435_p;
-    private final double[] field_147434_q;
+    private final double[] noiseMap;
+    private double[][] newNoiseMap;
     private final float[] parabolicField;
     private final float[] parabolicField2;
     private World worldObj;
@@ -72,6 +75,10 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
     private MapGenVillage villageGenerator = new MapGenVillage();
     private MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
     private MapGenScatteredFeature scatteredFeatureGenerator = new MapGenScatteredFeature();
+    
+    private MinecraftiaNoiseGen newNoiseGen;
+    
+    private double xCoord, zCoord;
 	
 	public ChunkProviderMinecraftia(World world, long seed, boolean features)
 	{
@@ -85,11 +92,14 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
 		this.noiseGen5 = new NoiseGenMinecraftia(this.rng, 10);
 		this.noiseGen6 = new NoiseGenMinecraftia(this.rng, 16);
         this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.rng, 8);
-        this.field_147434_q = new double[825];
+        this.noiseMap = new double[825];
+        this.newNoiseMap = new double[16][16];
         this.parabolicField = new float[25];
         this.parabolicField2 = new float[25];
         this.worldObj = world;
         this.mapFeaturesEnabled = features;
+        
+        this.newNoiseGen = new MinecraftiaNoiseGen(this.rng);
         
         for (int j = -2; j <= 2; ++j)
         {
@@ -104,7 +114,6 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
         {
                 float f = 10.0F / MathHelper.sqrt_float((float)Math.pow(((double)j - 12.5D), 2) + 6.0F);
                 this.parabolicField2[j] = f;
-                //System.out.print(f + "\n");
         }
         
         NoiseGenerator[] noiseGens = {noiseGen1, noiseGen2, noiseGen3, noiseGen4, noiseGen5, noiseGen6, mobSpawnerNoise};
@@ -144,7 +153,7 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
         this.rng.setSeed((long)x * 341873128712L + (long)y * 132897987541L);
         Block[] ablock = new Block[65536];
         byte[] abyte = new byte[65536];
-        this.func_147424_a(x, y, ablock);
+        this.genTerrain(x, y, ablock);
         this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, x * 16, y * 16, 16, 16);
         this.replaceBlocksForBiome(x, y, ablock, abyte, this.biomesForGeneration);
         this.caveGenerator.func_151539_a(this, this.worldObj, x, y, ablock);
@@ -170,7 +179,47 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
         return chunk;
     }
 	
-	public void func_147424_a(int p_147424_1_, int p_147424_2_, Block[] p_147424_3_)
+	/**
+	 * NOTES:
+	 * Order: Y, Z, X
+	 */
+	/*public void genTerrain(int x, int z, Block[] blockStorage)
+    {
+        byte seaLevel = 63;
+        this.biomesForGeneration = this.worldObj.getWorldChunkManager().getBiomesForGeneration(this.biomesForGeneration, x * 4 - 2, z * 4 - 2, 10, 10);
+        this.createNoiseFields(x, z);
+        int y2 = 0;
+
+        for(int x1 = 0; x1 < 16; x1++)
+        {
+        	for(int z1 = 0; z1 < 16; z1++)
+        	{
+        		int height = (int)(this.newNoiseMap[x1][z1] * 256.0D);
+        		for(int y1 = 0; y1 < 256; y1++)
+        		{
+        			if(y1 < height)
+        				blockStorage[y2] = Blocks.stone;
+        			else
+        				blockStorage[y2] = Blocks.air;
+
+        			y2++;
+        		}
+        	}
+        }
+    }
+	
+	private void createNoiseFields(int x, int z)
+	{
+		newNoiseMap = newNoiseGen.genNoiseMap(newNoiseMap, x, z);
+		
+		for(int i = 0; i < 16; i++)
+		{
+			for(int j = 0; j < 16; j++)
+				System.out.print(newNoiseMap[i][j] + "\n");
+		}
+	}*/
+	
+	public void genTerrain(int p_147424_1_, int p_147424_2_, Block[] p_147424_3_)
     {
         byte b0 = 63;
         this.biomesForGeneration = this.worldObj.getWorldChunkManager().getBiomesForGeneration(this.biomesForGeneration, p_147424_1_ * 4 - 2, p_147424_2_ * 4 - 2, 10, 10);
@@ -191,14 +240,14 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
                 for (int k2 = 0; k2 < 32; ++k2)
                 {
                     double d0 = 0.14D;
-                    double d1 = this.field_147434_q[k1 + k2];
-                    double d2 = this.field_147434_q[l1 + k2];
-                    double d3 = this.field_147434_q[i2 + k2];
-                    double d4 = this.field_147434_q[j2 + k2];
-                    double d5 = (this.field_147434_q[k1 + k2 + 1] - d1) * d0;
-                    double d6 = (this.field_147434_q[l1 + k2 + 1] - d2) * d0;
-                    double d7 = (this.field_147434_q[i2 + k2 + 1] - d3) * d0;
-                    double d8 = (this.field_147434_q[j2 + k2 + 1] - d4) * d0;
+                    double d1 = this.noiseMap[k1 + k2];
+                    double d2 = this.noiseMap[l1 + k2];
+                    double d3 = this.noiseMap[i2 + k2];
+                    double d4 = this.noiseMap[j2 + k2];
+                    double d5 = (this.noiseMap[k1 + k2 + 1] - d1) * d0;
+                    double d6 = (this.noiseMap[l1 + k2 + 1] - d2) * d0;
+                    double d7 = (this.noiseMap[i2 + k2 + 1] - d3) * d0;
+                    double d8 = (this.noiseMap[j2 + k2 + 1] - d4) * d0;
 
                     for (int l2 = 0; l2 < 8; ++l2)
                     {
@@ -285,8 +334,9 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
 
                         if (biomegenbase1.rootHeight > biomegenbase.rootHeight)
                         {
-                            f5 /= 2.0F;
+                            f5 = biomegenbase.rootHeight;
                         }
+                        //f5 = biomegenbase.rootHeight;
 
                         f += f4 * f5;
                         f1 += f3 * f5;
@@ -356,7 +406,7 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
                         d10 = d10 * (1.0D - d11) + -10.0D * d11;
                     }
 
-                    this.field_147434_q[l] = d10;
+                    this.noiseMap[l] = d10;
                     ++l;
                 }
             }

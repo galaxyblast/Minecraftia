@@ -2,24 +2,26 @@ package com.galaxyblast.minecraftia.world;
 
 import java.util.Random;
 
+import com.galaxyblast.minecraftia.world.noise.MinecraftiaNoiseGenImproved;
+
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.gen.NoiseGeneratorImproved;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
 public class NoiseGenMinecraftia extends NoiseGeneratorOctaves
 {
-    private NoiseGeneratorImproved[] generatorCollection;
+    private MinecraftiaNoiseGenImproved[] generatorCollection;
     private int octaves;
     
 	public NoiseGenMinecraftia(Random rng, int oct)
 	{
 		super(rng, oct);
 		this.octaves = oct;
-        this.generatorCollection = new NoiseGeneratorImproved[oct];
+        this.generatorCollection = new MinecraftiaNoiseGenImproved[oct];
 
         for (int i = 0; i < oct; ++i)
         {
-            this.generatorCollection[i] = new NoiseGeneratorImproved(rng);
+            this.generatorCollection[i] = new MinecraftiaNoiseGenImproved(rng);
         }
 	}
 

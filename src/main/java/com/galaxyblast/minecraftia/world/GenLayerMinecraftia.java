@@ -71,7 +71,7 @@ public class GenLayerMinecraftia extends GenLayer
         GenLayerRiverInit genlayerriverinit = new GenLayerRiverInit(100L, genlayer);
         Object object = p_75901_2_.getBiomeLayer(p_75901_0_, genlayer2);
 
-        GenLayer genlayer1 = GenLayerZoom.magnify(1000L, genlayerriverinit, 4);
+        GenLayer genlayer1 = GenLayerZoom.magnify(1000L, genlayerriverinit, 16);
         GenLayerHills genlayerhills = new GenLayerHills(1000L, (GenLayer)object, genlayer1);
         genlayer = GenLayerZoom.magnify(1000L, genlayerriverinit, 4);
         genlayer = GenLayerZoom.magnify(1000L, genlayer, b0);
