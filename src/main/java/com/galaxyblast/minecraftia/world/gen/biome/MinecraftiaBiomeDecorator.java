@@ -121,7 +121,7 @@ public class MinecraftiaBiomeDecorator extends BiomeDecorator
         this.genForest = false;
     }
 
-    public void decorateChunk(World p_150512_1_, Random p_150512_2_, BiomeGenBase p_150512_3_, int p_150512_4_, int p_150512_5_)
+    public void decorateChunk(World w, Random r, BiomeGenBase b, int x, int z)
     {
         if (this.currentWorld != null)
         {
@@ -129,12 +129,12 @@ public class MinecraftiaBiomeDecorator extends BiomeDecorator
         }
         else
         {
-            this.currentWorld = p_150512_1_;
-            this.randomGenerator = p_150512_2_;
-            this.chunk_X = p_150512_4_;
-            this.chunk_Z = p_150512_5_;
-            this.treeGenerator = new TreeGen(this.randomGenerator);
-            this.genDecorations(p_150512_3_);
+            this.currentWorld = w;
+            this.randomGenerator = r;
+            this.chunk_X = x;
+            this.chunk_Z = z;
+            this.treeGenerator = new TreeGen(this.randomGenerator, b);
+            this.genDecorations(b);
             this.currentWorld = null;
             this.randomGenerator = null;
         }

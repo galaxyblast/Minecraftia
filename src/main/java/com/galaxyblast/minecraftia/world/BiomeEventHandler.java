@@ -36,7 +36,9 @@ public class BiomeEventHandler
 		
 		e.biome.theBiomeDecorator = e.newBiomeDecorator;
 		
-		if(e.biome == BiomeGenBase.forest)
+		if(e.biome == BiomeGenBase.forest || e.biome == BiomeGenBase.forestHills || e.biome == BiomeGenBase.birchForest
+				|| e.biome == BiomeGenBase.birchForestHills || e.biome == BiomeGenBase.taiga
+				|| e.biome == BiomeGenBase.taigaHills || e.biome == BiomeGenBase.roofedForest)
 			((MinecraftiaBiomeDecorator)e.biome.theBiomeDecorator).genForest = true;
 	}
 }

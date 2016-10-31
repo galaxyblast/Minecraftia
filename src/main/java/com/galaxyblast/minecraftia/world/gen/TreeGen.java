@@ -6,6 +6,7 @@ import java.util.Random;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 import com.galaxyblast.minecraftia.engine.BiomeDecoThread;
@@ -17,7 +18,7 @@ public class TreeGen extends WorldGenerator
 	private WeightedRandom treeList;
 	private BiomeDecoThread decoThread = new BiomeDecoThread();
 	
-	public TreeGen(Random rng)
+	public TreeGen(Random rng, BiomeGenBase b)
 	{
 		this.treeList = new WeightedRandom(rng);
 		
@@ -29,6 +30,8 @@ public class TreeGen extends WorldGenerator
 		this.treeList.add(med, med.getWeight());
 		TreeTypeFell fell = new TreeTypeFell();
 		this.treeList.add(fell, fell.getWeight());
+		TreeTypeTiny tiny = new TreeTypeTiny();
+		this.treeList.add(tiny, tiny.getWeight());
 	}
 	
 	public boolean generate(World world, Random rng, int x, int y, int z)
