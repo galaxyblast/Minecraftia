@@ -27,9 +27,9 @@ public class TreeTypeTiny implements TreeType
 				{
 					for(int z1 = -1; z1 < 2; z1++)
 					{
-						for(int y1 = 1; y1 < 3; y1++)
+						for(int y1 = 1; y1 <= 3; y1++)
 						{
-							if(r.nextBoolean() && w.getBlock(x + x1, y + y1, z + z1) != Blocks.log)
+							if(r.nextInt(3) != 0 && w.getBlock(x + x1, y + y1, z + z1) != Blocks.log)
 								w.setBlock(x + x1, y + y1, z + z1, Blocks.leaves, meta, 2);
 						}
 					}
