@@ -2,6 +2,8 @@ package com.galaxyblast.minecraftia.world.gen.tree;
 
 import java.util.Random;
 
+import com.galaxyblast.minecraftia.blocks.MinecraftiaBlocks;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -20,7 +22,7 @@ public class TreeTypeTiny implements TreeType
 			{
 				//Base
 				for(int i = 0; i <= 3; i++)
-					w.setBlock(x, y + i, z, Blocks.log, meta, 2);
+					w.setBlock(x, y + i, z, MinecraftiaBlocks.thinLog, meta, 2);
 				
 				//Leaves
 				for(int x1 = -1; x1 < 2; x1++)
@@ -29,7 +31,7 @@ public class TreeTypeTiny implements TreeType
 					{
 						for(int y1 = 1; y1 <= 3; y1++)
 						{
-							if(r.nextInt(3) != 0 && w.getBlock(x + x1, y + y1, z + z1) != Blocks.log)
+							if(r.nextInt(3) != 0 && w.getBlock(x + x1, y + y1, z + z1).getMaterial() != Material.wood)
 								w.setBlock(x + x1, y + y1, z + z1, Blocks.leaves, meta, 2);
 						}
 					}

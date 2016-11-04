@@ -1,2 +1,6 @@
 generator.default=Classic
 generator.minecraftiaworld=Minecraftia
+
+tile.thinLog_0.name=Oak Log
+tile.thinLog_1.name=Spruce Log
+tile.thinLog_2.name=Birch Log

@@ -1,5 +1,6 @@
 package com.galaxyblast.minecraftia.proxy;
 
+import com.galaxyblast.minecraftia.blocks.MinecraftiaBlocks;
 import com.galaxyblast.minecraftia.engine.PhysicsEventHandler;
 import com.galaxyblast.minecraftia.entities.player.EntityEventHandler;
 import com.galaxyblast.minecraftia.entities.player.PlayerEventHandler;
@@ -21,6 +22,8 @@ public class CommonProxy
     	MinecraftForge.EVENT_BUS.register(new EntityEventHandler());
     	MinecraftForge.EVENT_BUS.register(new PhysicsEventHandler());
     	MinecraftForge.TERRAIN_GEN_BUS.register(new BiomeEventHandler());
+    	
+    	MinecraftiaBlocks.init();
     }
     
     public void init(FMLInitializationEvent event)
