@@ -32,6 +32,10 @@ public class TreeGen extends WorldGenerator
 		this.treeList.add(fell, fell.getWeight());
 		TreeTypeTiny tiny = new TreeTypeTiny();
 		this.treeList.add(tiny, tiny.getWeight());
+		TreeTypePine pine = new TreeTypePine();
+		this.treeList.add(pine, pine.getWeight());
+		TreeTypeNormal n = new TreeTypeNormal();
+		this.treeList.add(n, n.getWeight());
 	}
 	
 	public boolean generate(World world, Random rng, int x, int y, int z)
@@ -43,7 +47,7 @@ public class TreeGen extends WorldGenerator
 				TreeType tree = this.treeList.get();
 				
 				if(tree != null)
-					decoThread.queueTask(new TaskGenTree(tree, world, rng, x, y, z));
+					decoThread.queueTask(new TaskGenTree(tree, world, rng, x, y + 1, z));
 				//return tree.generate(world, rng, x, y + 1, z);
 			}
 			else if(world.getBlock(x, y - 1, z) == Blocks.grass)

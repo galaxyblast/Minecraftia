@@ -140,14 +140,14 @@ public class MinecraftiaBiomeDecorator extends BiomeDecorator
         }
     }
 
-    protected void genDecorations(BiomeGenBase p_150513_1_)
+    protected void genDecorations(BiomeGenBase biome)
     {
         MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(currentWorld, randomGenerator, chunk_X, chunk_Z));
         this.generateOres();
         int i;
         int j;
         int k;
-
+        
         boolean doGen = TerrainGen.decorate(currentWorld, randomGenerator, chunk_X, chunk_Z, SAND);
         for (i = 0; doGen && i < this.sandPerChunk2; ++i)
         {
@@ -175,7 +175,7 @@ public class MinecraftiaBiomeDecorator extends BiomeDecorator
         i = this.treesPerChunk;
         
         if(this.genForest)
-        	i = 10;
+        	i = 16;
 
         if (this.randomGenerator.nextInt(10) == 0)
         {
@@ -215,7 +215,7 @@ public class MinecraftiaBiomeDecorator extends BiomeDecorator
             k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
             l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
             i1 = nextInt(this.currentWorld.getHeightValue(k, l) + 32);
-            String s = p_150513_1_.func_150572_a(this.randomGenerator, k, i1, l);
+            String s = biome.func_150572_a(this.randomGenerator, k, i1, l);
             BlockFlower blockflower = BlockFlower.func_149857_e(s);
 
             if (blockflower.getMaterial() != Material.air)
@@ -231,7 +231,7 @@ public class MinecraftiaBiomeDecorator extends BiomeDecorator
             k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
             l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
             i1 = nextInt(this.currentWorld.getHeightValue(k, l) * 2);
-            WorldGenerator worldgenerator = p_150513_1_.getRandomWorldGenForGrass(this.randomGenerator);
+            WorldGenerator worldgenerator = biome.getRandomWorldGenForGrass(this.randomGenerator);
             worldgenerator.generate(this.currentWorld, this.randomGenerator, k, i1, l);
         }
 
