@@ -21,14 +21,14 @@ public class TreeTypeNormal implements TreeType
 		int tmp = 0;
 		int growUp = r.nextInt(4) + 1;
 		
-		if(isClear(w, x, y + leafStart, z))
+		if(isClear(w, x, y + leafStart, z) || !isTooClose(w, x, y, z))
 		{
 			for(int i = 0; i <= this.height; i++)
 			{
 				w.setBlock(x, y + i, z, Blocks.log, meta, 2);
 			}
 			
-			for(int i = leafStart; i < height; i++)
+			for(int i = leafStart; i < height + 3; i++)
 			{
 				tmp++;
 				if(tmp == (int)Math.ceil((double)(height - leafStart) / 3.0D) && rad > 0)
@@ -37,7 +37,7 @@ public class TreeTypeNormal implements TreeType
 					rad--;
 				}
 				
-				if(i % (r.nextInt(5) + 1) == 0)
+				if(i % (r.nextInt(5) + 1) == 0 && i < this.height)
 				{
 					genBranch(w, r, x, y + i, z, meta, r.nextInt(4));
 				}
@@ -50,6 +50,24 @@ public class TreeTypeNormal implements TreeType
 				}
 				else
 					growUp = r.nextInt(4) + 1;
+			}
+			
+			for(int i = height; i < height + 6; i++)
+			{
+				if(w.getBlock(x, y + i, z) == Blocks.air)
+					w.setBlock(x, y + i, z, Blocks.leaves, meta + 12, 2);
+				
+				if(i <= height + 3)
+				{
+					for(int j = -1; j <= 1; j++)
+					{
+						for(int k = -1; k <= 1; k++)
+						{
+							if(w.getBlock(x + j, y + i, z + k) == Blocks.air)
+								w.setBlock(x + j, y + i, z + k, Blocks.leaves, meta + 12, 2);
+						}
+					}
+				}
 			}
 			
 			return true;
@@ -182,7 +200,7 @@ public class TreeTypeNormal implements TreeType
 				{
 					Block b = w.getBlock(x + i, y + k, z + j);
 					
-					if(b != Blocks.air && (b.getMaterial() != Material.plants || b.getMaterial() != Material.leaves || b.getMaterial() != Material.wood))
+					if(b != Blocks.air && (b.getMaterial() != Material.plants || b.getMaterial() != Material.leaves || b.getMaterial() != Material.wood || !b.isFoliage(w, x + i, y + k, z + j)))
 					{
 						clear = false;
 					}
@@ -191,6 +209,27 @@ public class TreeTypeNormal implements TreeType
 		}
 		
 		return clear;
+	}
+	
+	private boolean isTooClose(World w, int x, int y, int z)
+	{
+		for(int i = -2; i <= 2; i++)
+		{
+			for(int j = -2; j <= 2; j++)
+			{
+				for(int k = -2; k <= 3; k++)
+				{
+					Block b = w.getBlock(x + i, y + k, z + j);
+					
+					if(b == Blocks.log)
+					{
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public class TreeTypeTiny implements TreeType
 		int meta = r.nextInt(3);
 		if(w.getBlock(x, y, z) == Blocks.air || w.getBlock(x, y, z).getMaterial() == Material.plants)
 		{
-			if(isClear(w, x, y + 1, z))
+			if(isClear(w, x, y + 1, z) || !isTooClose(w, x, y, z))
 			{
 				//Base
 				for(int i = 0; i <= 3; i++)
@@ -32,13 +32,13 @@ public class TreeTypeTiny implements TreeType
 						for(int y1 = 1; y1 <= 3; y1++)
 						{
 							if(r.nextInt(3) != 0 && w.getBlock(x + x1, y + y1, z + z1).getMaterial() != Material.wood)
-								w.setBlock(x + x1, y + y1, z + z1, Blocks.leaves, meta, 2);
+								w.setBlock(x + x1, y + y1, z + z1, Blocks.leaves, meta + 12, 2);
 						}
 					}
 				}
 				
 				//Top leaves
-				w.setBlock(x, y + 4, z, Blocks.leaves, meta, 2);
+				w.setBlock(x, y + 4, z, Blocks.leaves, meta + 12, 2);
 				
 				return true;
 			}
@@ -57,7 +57,7 @@ public class TreeTypeTiny implements TreeType
 		{
 			for(int j = -xSize; j <= xSize; j++)
 			{
-				for(int k = 0; k <= ySize; k++)
+				for(int k = 1; k <= ySize; k++)
 				{
 					Block b = w.getBlock(x + i, y + k, z + j);
 					
@@ -71,11 +71,32 @@ public class TreeTypeTiny implements TreeType
 		
 		return clear;
 	}
+	
+	private boolean isTooClose(World w, int x, int y, int z)
+	{
+		for(int i = -2; i <= 2; i++)
+		{
+			for(int j = -2; j <= 2; j++)
+			{
+				for(int k = -2; k <= 3; k++)
+				{
+					Block b = w.getBlock(x + i, y + k, z + j);
+					
+					if(b == Blocks.log)
+					{
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
 
 	@Override
 	public int getWeight()
 	{
-		return 2;
+		return 4;
 	}
 
 }

@@ -51,6 +51,6 @@ public class TreeTypeBush implements TreeType
 	
 	public int getWeight()
 	{
-		return 5;
+		return 4;
 	}
 }

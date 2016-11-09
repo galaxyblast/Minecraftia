@@ -190,14 +190,15 @@ public class MinecraftiaBiomeDecorator extends BiomeDecorator
         {
             k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
             l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
-            i1 = this.currentWorld.getHeightValue(k, l);
-            /*WorldGenAbstractTree worldgenabstracttree = p_150513_1_.func_150567_a(this.randomGenerator);
-            worldgenabstracttree.setScale(1.0D, 1.0D, 1.0D);
-
-            if (worldgenabstracttree.generate(this.currentWorld, this.randomGenerator, k, i1, l))
+            //i1 = this.currentWorld.getTopSolidOrLiquidBlock(k, l);
+            
+            i1 = 64;
+            for(int y = 0; y < 256; y++)
             {
-                worldgenabstracttree.func_150524_b(this.currentWorld, this.randomGenerator, k, i1, l);
-            }*/
+            	if(this.currentWorld.getBlock(k, y, l) == Blocks.grass)
+            		i1 = y;
+            }
+            
             this.treeGenerator.generate(this.currentWorld, this.randomGenerator, k, i1, l);
         }
 

@@ -27,7 +27,7 @@ public class TreeTypePine implements TreeType
 		
 		if(w.getBlock(x, y, z) == Blocks.air || w.getBlock(x, y, z).getMaterial() == Material.plants)
 		{
-			if(isClear(w, x, y, z))
+			if(isClear(w, x, y, z) || !isTooClose(w, x, y, z))
 			{
 				//Base
 				for(int i = 0; i <= ySize + this.yOff; i++)
@@ -177,7 +177,7 @@ public class TreeTypePine implements TreeType
 		{
 			for(int j = -xSize; j <= xSize; j++)
 			{
-				for(int k = 0; k <= ySize; k++)
+				for(int k = 2; k <= ySize; k++)
 				{
 					Block b = w.getBlock(x + i, y + k, z + j);
 					
@@ -190,6 +190,27 @@ public class TreeTypePine implements TreeType
 		}
 		
 		return clear;
+	}
+	
+	private boolean isTooClose(World w, int x, int y, int z)
+	{
+		for(int i = -3; i <= 3; i++)
+		{
+			for(int j = -3; j <= 3; j++)
+			{
+				for(int k = -2; k <= 3; k++)
+				{
+					Block b = w.getBlock(x + i, y + k, z + j);
+					
+					if(b == Blocks.log)
+					{
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
 	}
 
 	@Override

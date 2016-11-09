@@ -14,7 +14,7 @@ public class TreeTypeSmall implements TreeType
 		int meta = r.nextInt(3);
 		if(w.getBlock(x, y, z) == Blocks.air || w.getBlock(x, y, z).getMaterial() == Material.plants)
 		{
-			if(isClear(w, x, y + 1, z))
+			if(isClear(w, x, y + 1, z) || !isTooClose(w, x, y, z))
 			{
 				int xOff, yOff, zOff;
 				
@@ -40,7 +40,7 @@ public class TreeTypeSmall implements TreeType
 								for(int y1 = (y + yOff) - 1; y1 <= (y + yOff) + 1; y1++)
 								{
 									if(r.nextInt(3) != 0 && w.getBlock(x1, y1, z1) != Blocks.log)
-										w.setBlock(x1, y1, z1, Blocks.leaves, meta, 2);
+										w.setBlock(x1, y1, z1, Blocks.leaves, meta + 12, 2);
 								}
 							}
 						}
@@ -55,7 +55,7 @@ public class TreeTypeSmall implements TreeType
 						for(int y1 = (y + 5) - 2; y1 <= (y + 5) + 1; y1++)
 						{
 							if(w.getBlock(x1, y1, z1) != Blocks.log)
-								w.setBlock(x1, y1, z1, Blocks.leaves, meta, 2);
+								w.setBlock(x1, y1, z1, Blocks.leaves, meta + 12, 2);
 						}
 					}
 				}
@@ -68,7 +68,7 @@ public class TreeTypeSmall implements TreeType
 						for(int y1 = (y + 5) - 2; y1 <= (y + 5); y1++)
 						{
 							if(w.getBlock(x1, y1, z1) != Blocks.log && r.nextBoolean())
-								w.setBlock(x1, y1, z1, Blocks.leaves, meta, 2);
+								w.setBlock(x1, y1, z1, Blocks.leaves, meta + 12, 2);
 						}
 					}
 				}
@@ -90,7 +90,7 @@ public class TreeTypeSmall implements TreeType
 		{
 			for(int j = -xSize; j <= xSize; j++)
 			{
-				for(int k = 0; k <= ySize; k++)
+				for(int k = 2; k <= ySize; k++)
 				{
 					Block b = w.getBlock(x + i, y + k, z + j);
 					
@@ -103,6 +103,27 @@ public class TreeTypeSmall implements TreeType
 		}
 		
 		return clear;
+	}
+	
+	private boolean isTooClose(World w, int x, int y, int z)
+	{
+		for(int i = -2; i <= 2; i++)
+		{
+			for(int j = -2; j <= 2; j++)
+			{
+				for(int k = -2; k <= 3; k++)
+				{
+					Block b = w.getBlock(x + i, y + k, z + j);
+					
+					if(b == Blocks.log)
+					{
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	public int getWeight()

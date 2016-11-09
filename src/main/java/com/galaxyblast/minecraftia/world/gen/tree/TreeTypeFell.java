@@ -24,7 +24,7 @@ public class TreeTypeFell implements TreeType
 			meta = 8 + r.nextInt(3);
 		}
 		
-		if(isClear(w, x, y, z, size, xOff))
+		if(isClear(w, x, y, z, size, xOff) || !isTooClose(w, x, y, z))
 		{
 			for(int i = 0; i <= size; i++)
 			{
@@ -63,6 +63,27 @@ public class TreeTypeFell implements TreeType
 		}
 		
 		return clear;
+	}
+	
+	private boolean isTooClose(World w, int x, int y, int z)
+	{
+		for(int i = -2; i <= 2; i++)
+		{
+			for(int j = -2; j <= 2; j++)
+			{
+				for(int k = -2; k <= 3; k++)
+				{
+					Block b = w.getBlock(x + i, y + k, z + j);
+					
+					if(b != Blocks.air && (b.getMaterial() != Material.plants || b.getMaterial() != Material.leaves || b.getMaterial() != Material.wood || !b.isFoliage(w, x + i, y + k, z + j)))
+					{
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
 	}
 
 	@Override
