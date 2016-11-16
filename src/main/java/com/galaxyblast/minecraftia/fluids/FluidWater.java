@@ -9,8 +9,6 @@ public class FluidWater extends Fluid
 	public FluidWater(String fluidName)
 	{
 		super(fluidName);
-		this.setDensity(FluidRegistry.WATER.getDensity());
-		this.setViscosity(FluidRegistry.WATER.getViscosity());
 	}
 
 }
