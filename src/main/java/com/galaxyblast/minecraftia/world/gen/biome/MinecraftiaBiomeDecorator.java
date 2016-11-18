@@ -25,6 +25,7 @@ import static net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.Ev
 
 import java.util.Random;
 
+import com.galaxyblast.minecraftia.blocks.MinecraftiaBlocks;
 import com.galaxyblast.minecraftia.world.gen.ClayGen;
 import com.galaxyblast.minecraftia.world.gen.SandGen;
 import com.galaxyblast.minecraftia.world.gen.TreeGen;
@@ -338,7 +339,7 @@ public class MinecraftiaBiomeDecorator extends BiomeDecorator
                 k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
                 l = this.randomGenerator.nextInt(this.randomGenerator.nextInt(248) + 8);
                 i1 = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
-                (new WorldGenLiquids(Blocks.flowing_water)).generate(this.currentWorld, this.randomGenerator, k, l, i1);
+                (new WorldGenLiquids(MinecraftiaBlocks.water)).generate(this.currentWorld, this.randomGenerator, k, l, i1);
             }
 
             for (j = 0; j < 20; ++j)

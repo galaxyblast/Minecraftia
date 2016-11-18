@@ -2,6 +2,8 @@ package com.galaxyblast.minecraftia.world;
 
 import java.util.Random;
 
+import com.galaxyblast.minecraftia.blocks.MinecraftiaBlocks;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -239,7 +241,7 @@ public class MinecraftiaGenCave extends MapGenBase
 
     protected boolean isOceanBlock(Block[] data, int index, int x, int y, int z, int chunkX, int chunkZ)
     {
-        return data[index] == Blocks.flowing_water || data[index] == Blocks.water;
+        return data[index] == Blocks.flowing_water || data[index] == Blocks.water || data[index] == MinecraftiaBlocks.water;
     }
 
     //Exception biomes to make sure we generate like vanilla

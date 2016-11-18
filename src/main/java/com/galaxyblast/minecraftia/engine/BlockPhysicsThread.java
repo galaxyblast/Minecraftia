@@ -5,7 +5,7 @@ import java.util.Queue;
 
 import com.galaxyblast.minecraftia.engine.tasks.Task;
 
-public class BlockPhysics extends Thread
+public class BlockPhysicsThread extends Thread
 {
 	private boolean isRunning = false;
 	private Queue<Task> taskList = new LinkedList();

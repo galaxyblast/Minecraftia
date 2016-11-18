@@ -8,7 +8,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class PhysicsEventHandler
 {
-	public BlockPhysics bPhysics = new BlockPhysics();
+	public BlockPhysicsThread bPhysics = new BlockPhysicsThread();
 	
 	@SubscribeEvent
 	public void blockBreak(BlockEvent.HarvestDropsEvent e)

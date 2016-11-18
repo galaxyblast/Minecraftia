@@ -2,6 +2,9 @@ package com.galaxyblast.minecraftia.world;
 
 import java.util.Random;
 
+import com.galaxyblast.minecraftia.blocks.MinecraftiaBlocks;
+import com.galaxyblast.minecraftia.world.gen.BiomeGen;
+import com.galaxyblast.minecraftia.world.gen.biome.BiomeUtils;
 import com.galaxyblast.minecraftia.world.noise.MinecraftiaNoiseGen;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
@@ -179,46 +182,6 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
         return chunk;
     }
 	
-	/**
-	 * NOTES:
-	 * Order: Y, Z, X
-	 */
-	/*public void genTerrain(int x, int z, Block[] blockStorage)
-    {
-        byte seaLevel = 63;
-        this.biomesForGeneration = this.worldObj.getWorldChunkManager().getBiomesForGeneration(this.biomesForGeneration, x * 4 - 2, z * 4 - 2, 10, 10);
-        this.createNoiseFields(x, z);
-        int y2 = 0;
-
-        for(int x1 = 0; x1 < 16; x1++)
-        {
-        	for(int z1 = 0; z1 < 16; z1++)
-        	{
-        		int height = (int)(this.newNoiseMap[x1][z1] * 256.0D);
-        		for(int y1 = 0; y1 < 256; y1++)
-        		{
-        			if(y1 < height)
-        				blockStorage[y2] = Blocks.stone;
-        			else
-        				blockStorage[y2] = Blocks.air;
-
-        			y2++;
-        		}
-        	}
-        }
-    }
-	
-	private void createNoiseFields(int x, int z)
-	{
-		newNoiseMap = newNoiseGen.genNoiseMap(newNoiseMap, x, z);
-		
-		for(int i = 0; i < 16; i++)
-		{
-			for(int j = 0; j < 16; j++)
-				System.out.print(newNoiseMap[i][j] + "\n");
-		}
-	}*/
-	
 	public void genTerrain(int p_147424_1_, int p_147424_2_, Block[] p_147424_3_)
     {
         byte b0 = 63;
@@ -274,7 +237,7 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
                                 }
                                 else if (k2 * 8 + l2 < b0)
                                 {
-                                    p_147424_3_[j3 += short1] = Blocks.water;
+                                    p_147424_3_[j3 += short1] = MinecraftiaBlocks.water;
                                 }
                                 else
                                 {
@@ -296,6 +259,7 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
         }
     }
 
+	//Use world.getBiomeGen... in the noise octaves for biome roughness
 	private void createNoiseFields(int noiseOff1, int noiseOff2, int noiseOff3)
     {
         this.field_147426_g = this.noiseGen6.generateNoiseOctaves(this.field_147426_g, noiseOff1, noiseOff3, 5, 5, 0.0D, 200.0D, 0.0D);
@@ -308,6 +272,131 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
         this.field_147425_f = this.noiseGen2.generateNoiseOctaves(this.field_147425_f, noiseOff1, noiseOff2, noiseOff3, 5, 33, 5, 684.412D, 684.412D, 684.412D);
         int l = 0;
         int i1 = 0;
+        int rough;
+
+        for (int j1 = 0; j1 < 5; ++j1)
+        {
+            for (int k1 = 0; k1 < 5; ++k1)
+            {
+                float f = 0.0F;
+                float f1 = 0.0F;
+                float f2 = 0.0F;
+                byte b0 = 2;
+                BiomeGenBase biomegenbase = this.biomesForGeneration[j1 + 2 + (k1 + 2) * 10];
+
+                for (int l1 = -b0; l1 <= b0; ++l1)
+                {
+                    for (int i2 = -b0; i2 <= b0; ++i2)
+                    {
+                    	BiomeGenBase biomegenbase1 = this.biomesForGeneration[j1 + l1 + 2 + (k1 + i2 + 2) * 10];
+                        float f3 = biomegenbase1.rootHeight;
+                        float f4 = biomegenbase1.heightVariation;
+
+                        float f5 = this.parabolicField[l1 + 2 + (i2 + 2) * 5] / (f3 + 2.0F);
+
+                        if (biomegenbase1.rootHeight > biomegenbase.rootHeight)
+                        {
+                            f5 /= 2.0F;
+                        }
+
+                        f += f4 * f5;
+                        f1 += f3 * f5;
+                        f2 += f5;
+                    }
+                }
+                
+                rough = BiomeUtils.getRoughness(biomegenbase);
+                
+                if(rough <= -1)
+                {
+                	rough = 0;
+                	System.out.println("Error: Biome ID " + biomegenbase.biomeID + " roughness not registered! Defaulting to 0.");
+                }
+
+                f /= f2;
+                f1 /= f2;
+                f = f * 0.9F + 0.1F;
+                f1 = (f1 * 4.0F - 1.0F) / 8.0F;
+                double d12 = this.field_147426_g[i1] / 8000.0D;
+
+                if (d12 < 0.0D)
+                {
+                    d12 = -d12 * 0.3D;
+                }
+
+                d12 = d12 * 3.0D - 2.0D;
+
+                if (d12 < 0.0D)
+                {
+                    d12 /= 2.0D;
+
+                    if (d12 < -1.0D)
+                    {
+                        d12 = -1.0D;
+                    }
+
+                    d12 /= 1.4D;
+                    d12 /= 2.0D;
+                }
+                else
+                {
+                    if (d12 > 1.0D)
+                    {
+                        d12 = 1.0D;
+                    }
+
+                    d12 /= 8.0D;
+                }
+
+                ++i1;
+                double d13 = (double)f1;
+                double d14 = (double)f;
+                d13 += d12 * 0.2D;
+                d13 = d13 * 8.5D / 8.0D;
+                double d5 = 8.5D + d13 * 4.0D;
+
+                for (int j2 = 0; j2 < 33; ++j2)
+                {
+                    double d6 = ((double)j2 - d5) * 12.0D * 128.0D / 256.0D / d14;
+
+                    if (d6 < 0.0D)
+                    {
+                        d6 *= 4.0D;
+                    }
+
+                    double d7 = this.field_147428_e[l] / 512.0D;
+                    double d8 = this.field_147425_f[l] / 512.0D;
+                    double d9 = (this.field_147427_d[l] / 10.0D + 1.0D) / 2.0D;
+                    double d10 = MathHelper.denormalizeClamp(d7, d8, d9) - d6;
+
+                    if (j2 > 29)
+                    {
+                        double d11 = (double)((float)(j2 - 29) / 3.0F);
+                        d10 = d10 * (1.0D - d11) + -10.0D * d11;
+                    }
+
+                    this.noiseMap[l] = d10;
+                    ++l;
+                }
+            }
+        }
+    }
+	
+	/*private void createNoiseFields(int p_147423_1_, int p_147423_2_, int p_147423_3_) Vanilla noise field gen for reference
+    {
+        double d0 = 684.412D;
+        double d1 = 684.412D;
+        double d2 = 512.0D;
+        double d3 = 512.0D;
+        this.field_147426_g = this.noiseGen6.generateNoiseOctaves(this.field_147426_g, p_147423_1_, p_147423_3_, 5, 5, 200.0D, 200.0D, 0.5D);
+        this.field_147427_d = this.noiseGen3.generateNoiseOctaves(this.field_147427_d, p_147423_1_, p_147423_2_, p_147423_3_, 5, 33, 5, 8.555150000000001D, 4.277575000000001D, 8.555150000000001D);
+        this.field_147428_e = this.noiseGen1.generateNoiseOctaves(this.field_147428_e, p_147423_1_, p_147423_2_, p_147423_3_, 5, 33, 5, 684.412D, 684.412D, 684.412D);
+        this.field_147425_f = this.noiseGen2.generateNoiseOctaves(this.field_147425_f, p_147423_1_, p_147423_2_, p_147423_3_, 5, 33, 5, 684.412D, 684.412D, 684.412D);
+        boolean flag1 = false;
+        boolean flag = false;
+        int l = 0;
+        int i1 = 0;
+        double d4 = 8.5D;
 
         for (int j1 = 0; j1 < 5; ++j1)
         {
@@ -324,19 +413,15 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
                     for (int i2 = -b0; i2 <= b0; ++i2)
                     {
                         BiomeGenBase biomegenbase1 = this.biomesForGeneration[j1 + l1 + 2 + (k1 + i2 + 2) * 10];
-                        
                         float f3 = biomegenbase1.rootHeight;
                         float f4 = biomegenbase1.heightVariation;
 
                         float f5 = this.parabolicField[l1 + 2 + (i2 + 2) * 5] / (f3 + 2.0F);
-                        if(biomegenbase1 == BiomeGenBase.extremeHills || biomegenbase1 == BiomeGenBase.extremeHillsPlus)
-                        	f5 = this.parabolicField2[l1 + 2 + (i2 + 2) * 5] / (f3 + 2.0F);
 
                         if (biomegenbase1.rootHeight > biomegenbase.rootHeight)
                         {
-                            f5 = biomegenbase.rootHeight;
+                            f5 /= 2.0F;
                         }
-                        //f5 = biomegenbase.rootHeight;
 
                         f += f4 * f5;
                         f1 += f3 * f5;
@@ -411,5 +496,5 @@ public class ChunkProviderMinecraftia extends ChunkProviderGenerate
                 }
             }
         }
-    }
+    }*/
 }
