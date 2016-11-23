@@ -1,5 +1,6 @@
 package com.galaxyblast.minecraftia.engine;
 
+import com.galaxyblast.minecraftia.Minecraftia;
 import com.galaxyblast.minecraftia.engine.tasks.TaskFallingTree;
 
 import net.minecraft.init.Blocks;
@@ -7,9 +8,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class PhysicsEventHandler
-{
-	public BlockPhysicsThread bPhysics = new BlockPhysicsThread();
-	
+{	
 	@SubscribeEvent
 	public void blockBreak(BlockEvent.HarvestDropsEvent e)
 	{
@@ -18,7 +17,7 @@ public class PhysicsEventHandler
 			TaskFallingTree treeTask = new TaskFallingTree();
 			treeTask.setBase(e.block, e.world);
 			treeTask.setCoords(e.x, e.y, e.z);
-			this.bPhysics.queueTask(treeTask);
+			Minecraftia.physicsThread.queueTask(treeTask);
 		}
 	}
 }

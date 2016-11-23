@@ -1,5 +1,6 @@
 package com.galaxyblast.minecraftia;
 
+import com.galaxyblast.minecraftia.engine.BlockPhysicsThread;
 import com.galaxyblast.minecraftia.proxy.CommonProxy;
 import com.galaxyblast.minecraftia.world.WorldTypeMinecraftia;
 
@@ -25,6 +26,8 @@ public class Minecraftia
     
     @SidedProxy(clientSide = "com.galaxyblast.minecraftia.proxy.ClientProxy", serverSide = "com.galaxyblast.minecraftia.proxy.ServerProxy")
     public static CommonProxy proxy;
+    
+    public static BlockPhysicsThread physicsThread = new BlockPhysicsThread();
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
