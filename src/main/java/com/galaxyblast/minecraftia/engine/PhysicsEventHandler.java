@@ -5,7 +5,10 @@ import com.galaxyblast.minecraftia.engine.tasks.TaskFallingTree;
 
 import net.minecraft.init.Blocks;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 
 public class PhysicsEventHandler
 {	
@@ -17,7 +20,15 @@ public class PhysicsEventHandler
 			TaskFallingTree treeTask = new TaskFallingTree();
 			treeTask.setBase(e.block, e.world);
 			treeTask.setCoords(e.x, e.y, e.z);
-			Minecraftia.physicsThread.queueTask(treeTask);
+			Minecraftia.instance.getPhysicsThread().queueTask(treeTask);
 		}
+	}
+	
+	@SubscribeEvent
+	public void unloadWorld(WorldEvent.Unload e)
+	{
+		System.out.println("Clearing physics thread.");
+		Minecraftia.instance.getPhysicsThread().setRunning(false);
+		Minecraftia.instance.getPhysicsThread().clearQueue();
 	}
 }

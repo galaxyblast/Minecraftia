@@ -9,14 +9,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-import com.galaxyblast.minecraftia.engine.BiomeDecoThread;
 import com.galaxyblast.minecraftia.engine.tasks.TaskGenTree;
 import com.galaxyblast.minecraftia.world.gen.tree.*;
 
 public class TreeGen extends WorldGenerator
 {
 	private WeightedRandom treeList;
-	private BiomeDecoThread decoThread = new BiomeDecoThread();
 	
 	public TreeGen(Random rng, BiomeGenBase b)
 	{
@@ -47,16 +45,14 @@ public class TreeGen extends WorldGenerator
 				TreeType tree = this.treeList.get();
 				
 				if(tree != null)
-					decoThread.queueTask(new TaskGenTree(tree, world, rng, x, y + 1, z));
-				//return tree.generate(world, rng, x, y + 1, z);
+					return tree.generate(world, rng, x, y + 1, z);
 			}
 			else if(world.getBlock(x, y - 1, z) == Blocks.grass)
 			{
 				TreeType tree = this.treeList.get();
 				
 				if(tree != null)
-					decoThread.queueTask(new TaskGenTree(tree, world, rng, x, y, z));
-				//return tree.generate(world, rng, x, y, z);
+						return tree.generate(world, rng, x, y, z);
 			}
 			return true;
 		}

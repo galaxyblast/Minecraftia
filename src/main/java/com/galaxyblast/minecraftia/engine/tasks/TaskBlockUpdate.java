@@ -10,7 +10,7 @@ import com.galaxyblast.minecraftia.fluids.BlockFluidWater;
 public abstract class TaskBlockUpdate implements Task
 {
 	protected Block blockForUpdate;
-	protected World worldObj;
+	public World worldObj;
 	protected int x, y, z;
 	protected Random rng;
 }
